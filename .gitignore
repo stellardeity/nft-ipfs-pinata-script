@@ -1,6 +1,5 @@
 node_modules
 .env
-images
-metadata
 output
 package-lock.json
+local.txt
