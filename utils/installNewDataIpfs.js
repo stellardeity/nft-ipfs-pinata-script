@@ -15,6 +15,7 @@ const installNewDataIpfs = async ({ folder, data }) => {
     const folderName = data;
     const folderPath = folder;
     const { files } = await recursive.read(folderPath);
+
     if (files?.length <= 0) {
       console.info("No files were found in folder path.");
       return;
