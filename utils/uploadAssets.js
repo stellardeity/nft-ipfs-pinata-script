@@ -9,10 +9,9 @@ const basePathConverter = require("base-path-converter");
 const PINATA_API_PINFILETOIPFS =
   "https://api.pinata.cloud/pinning/pinFileToIPFS";
 
-const installNewDataIpfs = async ({ folder, data }) => {
+const uploadAssets = async (folder) => {
   try {
     const outputPath = `./output/${folder}.json`;
-    const folderName = data;
     const folderPath = folder;
     const { files } = await recursive.read(folderPath);
 
@@ -29,7 +28,7 @@ const installNewDataIpfs = async ({ folder, data }) => {
     formData.append(
       "pinataMetadata",
       JSON.stringify({
-        name: folderName,
+        name: folderPath,
       })
     );
     const {
@@ -42,11 +41,11 @@ const installNewDataIpfs = async ({ folder, data }) => {
         pinata_secret_api_key: PINATA_API_SECRET,
       },
     });
-    fs.outputJsonSync(outputPath, { [folderName]: cid });
+    fs.outputJsonSync(outputPath, { [folderPath]: cid });
   } catch (error) {
     console.error(error);
     process.exit(1);
   }
 };
 
-module.exports = installNewDataIpfs;
+module.exports = uploadAssets;

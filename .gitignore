@@ -2,4 +2,3 @@ node_modules
 .env
 output
 package-lock.json
-local.txt

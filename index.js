@@ -1,11 +1,12 @@
-const installNewDataIpfs = require("./utils/installNewDataIpfs");
-const rewriteImgCid = require("./utils/rewriteImgCid");
+const uploadAssets = require("./utils/uploadAssets");
+const uploadImagePath = require("./utils/uploadImagePath");
 
-(async () => {
-  await installNewDataIpfs({ folder: "images", data: "images" });
+main();
+async function main() {
+  await uploadAssets("images");
   console.log("Images successfully installed");
-  await rewriteImgCid();
+  await uploadImagePath();
   console.log("Metadata has been updated");
-  await installNewDataIpfs({ folder: "metadata", data: "metadata" });
+  await uploadAssets("metadata");
   console.log("Done");
-})();
+}
