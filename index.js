@@ -1,5 +1,5 @@
-const uploadAssets = require("./utils/uploadAssets");
-const uploadImagePath = require("./utils/uploadImagePath");
+import { uploadAssets } from "./utils/uploadAssets.js";
+import { uploadImagePath } from "./utils/uploadImagePath.js";
 
 main();
 async function main() {

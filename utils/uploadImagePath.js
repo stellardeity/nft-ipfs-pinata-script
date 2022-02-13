@@ -1,7 +1,7 @@
-const { readFileSync, writeFileSync } = require("fs");
-const recursive = require("recursive-fs");
+import { readFileSync, writeFileSync } from "fs";
+import recursive from "recursive-fs";
 
-const uploadImagePath = async () => {
+export const uploadImagePath = async () => {
   const { files } = await recursive.read("metadata");
   const json = readFileSync("output/images.json", "utf8");
   const key = JSON.parse(json).images;
@@ -13,4 +13,3 @@ const uploadImagePath = async () => {
   });
 };
 
-module.exports = uploadImagePath;

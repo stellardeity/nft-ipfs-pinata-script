@@ -1,15 +1,15 @@
-require("dotenv").config();
-const { PINATA_API_KEY, PINATA_API_SECRET } = process.env;
-const axios = require("axios");
-const fs = require("fs-extra");
-const recursive = require("recursive-fs");
-const FormData = require("form-data");
-const basePathConverter = require("base-path-converter");
+import dotenv from 'dotenv'
+import fetch from 'node-fetch'
+import fs from "fs-extra";
+import recursive from "recursive-fs";
+import FormData from "form-data";
+import basePathConverter from "base-path-converter";
 
 const PINATA_API_PINFILETOIPFS =
   "https://api.pinata.cloud/pinning/pinFileToIPFS";
+const { PINATA_API_KEY, PINATA_API_SECRET } = dotenv.config().parsed
 
-const uploadAssets = async (folder) => {
+export const uploadAssets = async (folder) => {
   try {
     const outputPath = `./output/${folder}.json`;
     const folderPath = folder;
@@ -31,16 +31,16 @@ const uploadAssets = async (folder) => {
         name: folderPath,
       })
     );
-    const {
-      data: { IpfsHash: cid },
-    } = await axios.post(PINATA_API_PINFILETOIPFS, formData, {
-      maxBodyLength: "Infinity",
+    const data = await fetch(PINATA_API_PINFILETOIPFS, {
+      method: 'POST',
       headers: {
         "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
         pinata_api_key: PINATA_API_KEY,
         pinata_secret_api_key: PINATA_API_SECRET,
       },
+      body: formData
     });
+    const { IpfsHash: cid } = await data.json()
     fs.outputJsonSync(outputPath, { [folderPath]: cid });
   } catch (error) {
     console.error(error);
@@ -48,4 +48,3 @@ const uploadAssets = async (folder) => {
   }
 };
 
-module.exports = uploadAssets;

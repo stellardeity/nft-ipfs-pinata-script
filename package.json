@@ -8,12 +8,13 @@
   },
   "author": "",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
-    "axios": "^0.25.0",
     "base-path-converter": "^1.0.2",
     "dotenv": "^16.0.0",
     "form-data": "^4.0.0",
     "fs-extra": "^10.0.0",
+    "node-fetch": "^3.2.0",
     "recursive-fs": "^2.1.0"
   }
 }
